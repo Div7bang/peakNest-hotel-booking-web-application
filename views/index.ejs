@@ -1,0 +1,289 @@
+<%- include('partials/header') %>
+
+<!-- ══════════════════════════════════════
+     HERO — real Himalayan photo from Unsplash
+══════════════════════════════════════ -->
+<section class="hero">
+  <img
+    class="hero-img"
+    src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&auto=format&fit=crop"
+    alt="Himalayan mountain landscape"
+    loading="eager"
+  />
+  <div class="hero-overlay"></div>
+
+  <!-- Mountain silhouette overlay -->
+  <div class="hero-mountains">
+    <svg viewBox="0 0 1440 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,280 0,200 120,110 240,170 370,70 510,155 640,55 780,145 920,65 1060,155 1200,80 1340,140 1440,100 1440,280"
+        fill="rgba(5,12,5,0.45)"/>
+      <polygon points="0,280 0,230 90,175 200,215 310,155 440,200 560,145 680,195 800,130 930,190 1060,125 1190,185 1320,145 1440,170 1440,280"
+        fill="rgba(3,10,3,0.65)"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Discover Himachal Pradesh</p>
+    <h1 class="hero-title">
+      Where the
+      <em>Mountains</em>
+      Welcome You
+    </h1>
+    <p class="hero-subtitle">Luxury Stays Across the Himalayas</p>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+      <div class="search-group">
+        <span class="search-label">Destination</span>
+        <input type="text" class="search-input" id="searchDest"
+               placeholder="Shimla, Manali, Kasol…" list="destinations" autocomplete="off"/>
+        <datalist id="destinations">
+          <option value="Shimla">
+          <option value="Manali">
+          <option value="Dharamshala">
+          <option value="Kasol">
+          <option value="Spiti Valley">
+          <option value="Dalhousie">
+          <option value="Kullu">
+        </datalist>
+      </div>
+      <div class="search-group">
+        <span class="search-label">Check-in</span>
+        <input type="date" class="search-input" id="searchCheckin"/>
+      </div>
+      <div class="search-group">
+        <span class="search-label">Check-out</span>
+        <input type="date" class="search-input" id="searchCheckout"/>
+      </div>
+      <div class="search-group">
+        <span class="search-label">Guests</span>
+        <select class="search-input" id="searchGuests">
+          <option>1 Guest</option>
+          <option selected>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+          <option>5+ Guests</option>
+        </select>
+      </div>
+      <button class="search-btn" id="searchBtn">Search →</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     DESTINATIONS
+══════════════════════════════════════ -->
+<section class="locations" id="locations">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Where to Go</p>
+    <h2 class="section-title">Himachal's <em>Finest</em> Destinations</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="locations-grid">
+    <% locations.forEach((loc, i) => { %>
+    <div class="location-card reveal reveal-delay-<%= Math.min(i+1,3) %>"
+         onclick="document.getElementById('searchDest').value='<%= loc.name %>'; document.getElementById('hotels').scrollIntoView({behavior:'smooth'});"
+         title="Explore <%= loc.name %>">
+      <img src="<%= loc.image %>" alt="<%= loc.name %>, Himachal Pradesh" loading="lazy"/>
+      <div class="location-overlay"></div>
+      <div class="location-info">
+        <% if(loc.featured) { %><span class="location-tag">Featured</span><% } %>
+        <div class="location-name"><%= loc.name %></div>
+        <div class="location-count"><%= loc.hotels %> hotels available</div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     HOTELS
+══════════════════════════════════════ -->
+<section class="hotels" id="hotels">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Handpicked Properties</p>
+    <h2 class="section-title">Our <em>Signature</em> Hotels</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="hotels-grid">
+    <% hotels.forEach((hotel, i) => { %>
+    <div class="hotel-card reveal reveal-delay-<%= (i%3)+1 %>">
+      <div class="hotel-img-wrap">
+        <img src="<%= hotel.image %>" alt="<%= hotel.name %>" loading="lazy"/>
+        <% if(hotel.badge) { %>
+        <span class="hotel-badge <%= hotel.badgeType %>"><%= hotel.badge %></span>
+        <% } %>
+        <div class="hotel-rating"><%= hotel.rating %></div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-location">📍 <%= hotel.location %>, Himachal Pradesh</div>
+        <h3 class="hotel-name"><%= hotel.name %></h3>
+        <p class="hotel-desc"><%= hotel.description %></p>
+        <div class="hotel-amenities">
+          <% hotel.amenities.forEach(a => { %>
+          <span class="amenity-tag"><%= a %></span>
+          <% }) %>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-price">
+            <div class="from">From</div>
+            <% if(hotel.originalPrice) { %>
+            <div class="original">₹<%= hotel.originalPrice.toLocaleString('en-IN') %></div>
+            <% } %>
+            <span class="amount">₹<%= hotel.price.toLocaleString('en-IN') %></span>
+            <span class="per"> / night</span>
+          </div>
+          <a href="/hotel/<%= hotel.id %>" class="btn-view">View Hotel</a>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     ROOMS
+══════════════════════════════════════ -->
+<section class="rooms" id="rooms">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Accommodations</p>
+    <h2 class="section-title">Choose Your <em>Retreat</em></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="rooms-tabs">
+    <button class="room-tab active" data-type="all">All Rooms</button>
+    <button class="room-tab" data-type="deluxe">Deluxe</button>
+    <button class="room-tab" data-type="suite">Suites</button>
+    <button class="room-tab" data-type="villa">Villas</button>
+  </div>
+
+  <div class="rooms-grid">
+    <% rooms.forEach((room, i) => { %>
+    <div class="room-card reveal" data-type="<%= room.type %>"
+         style="transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.4s, box-shadow 0.4s, transform 0.4s;">
+      <div class="room-img-wrap">
+        <img src="<%= room.image %>" alt="<%= room.name %>" loading="lazy"/>
+        <% if(room.discount) { %>
+        <div class="room-deal">-<%= room.discount %>% OFF</div>
+        <% } %>
+      </div>
+      <div class="room-body">
+        <div class="room-type"><%= room.category %></div>
+        <h3 class="room-name"><%= room.name %></h3>
+        <div class="room-specs">
+          <span class="room-spec">👥 <%= room.guests %> Guests</span>
+          <span class="room-spec">🛏 <%= room.beds %></span>
+          <span class="room-spec">📐 <%= room.size %> sq ft</span>
+        </div>
+        <div class="room-features">
+          <% room.features.forEach(f => { %>
+          <span class="room-feature"><%= f %></span>
+          <% }) %>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">
+            <% if(room.originalPrice) { %>
+            <span class="crossed">₹<%= room.originalPrice.toLocaleString('en-IN') %></span>
+            <% } %>
+            <span class="final">₹<%= room.price.toLocaleString('en-IN') %></span>
+            <span class="night"> /night</span>
+          </div>
+          <!-- <button class="btn-book"
+            onclick="openBooking('<%= room.name %>', '₹<%= room.price.toLocaleString('en-IN') %>')"> -->
+            <button class="btn-book"
+  data-name="<%= room.name %>"
+  data-price="₹<%= room.price.toLocaleString('en-IN') %>">
+            Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PHOTO GALLERY STRIP
+══════════════════════════════════════ -->
+<div class="gallery-strip">
+  <div class="gallery-strip-img">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop" alt="Mountain hotel view" loading="lazy"/>
+  </div>
+  <div class="gallery-strip-img">
+    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80&auto=format&fit=crop" alt="Luxury hotel room" loading="lazy"/>
+  </div>
+  <div class="gallery-strip-img">
+    <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80&auto=format&fit=crop" alt="Resort pool" loading="lazy"/>
+  </div>
+  <div class="gallery-strip-img">
+    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80&auto=format&fit=crop" alt="Mountain spa" loading="lazy"/>
+  </div>
+  <div class="gallery-strip-img">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80&auto=format&fit=crop" alt="Hotel dining" loading="lazy"/>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     DEALS BANNER
+══════════════════════════════════════ -->
+<section class="deals-banner" id="deals">
+  <div class="deals-container">
+    <div class="deals-text reveal">
+      <p class="eyebrow">Limited Time Offers</p>
+      <h2>Escape to the <em>Hills</em> for Less</h2>
+      <p>Exclusive seasonal deals crafted to make your Himalayan dream more accessible. Book in advance and save big on our finest properties across Himachal Pradesh.</p>
+      <a href="#rooms" class="btn-deals">Explore All Deals →</a>
+    </div>
+
+    <div class="deals-list">
+      <% deals.forEach((deal, i) => { %>
+      <div class="deal-item reveal reveal-delay-<%= (i%2)+1 %>"
+           onclick="openBooking('<%= deal.name %>')">
+        <div class="deal-pct"><%= deal.discount %>%</div>
+        <div class="deal-name"><%= deal.name %></div>
+        <div class="deal-valid"><%= deal.validity %></div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Guest Stories</p>
+    <h2 class="section-title">Voices from the <em>Mountains</em></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="testimonials-grid">
+    <% testimonials.forEach((t, i) => { %>
+    <div class="testimonial-card reveal reveal-delay-<%= i+1 %>">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"<%= t.text %>"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <img src="<%= t.avatar %>" alt="<%= t.name %>" loading="lazy"/>
+        </div>
+        <div>
+          <div class="author-name"><%= t.name %></div>
+          <div class="author-trip"><%= t.trip %></div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

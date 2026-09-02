@@ -1,0 +1,11 @@
+MONGO_URI="mongodb://127.0.0.1:27017/peaknest"
+JWT_SECRET=mysecret123
+PORT=3000
+ADMIN_FULLNAME="PeakNest Admin"
+ADMIN_EMAIL="admin@peaknest.in"
+ADMIN_PASSWORD="Admin@123"
+.env
+.env.*
+node_modules/
+dist/
+build/

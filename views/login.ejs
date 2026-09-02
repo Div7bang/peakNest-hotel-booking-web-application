@@ -1,0 +1,91 @@
+<%- include('partials/header', { title: 'Login | PeakNest' }) %>
+<link rel="stylesheet" href="/css/auth.css"/>
+
+<main class="auth-main">
+  <div class="auth-card">
+    <p class="auth-eyebrow">Welcome Back</p>
+    <h1 class="auth-title">Guest Login</h1>
+    <p class="auth-subtitle">Sign in to manage your bookings</p>
+
+    <form id="userLoginForm" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" required/>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required/>
+      </div>
+      <button type="submit" class="auth-submit">Login</button>
+    </form>
+
+    <div id="userLoginMessage" class="auth-message" role="status" aria-live="polite"></div>
+
+    <p class="auth-footer-link">New to PeakNest? <a href="/signup">Create an account</a></p>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script>
+  const userLoginForm = document.getElementById('userLoginForm');
+  const userLoginMessage = document.getElementById('userLoginMessage');
+
+  userLoginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    userLoginMessage.className = 'auth-message';
+    userLoginMessage.textContent = 'Logging in...';
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        userLoginMessage.classList.add('error');
+        userLoginMessage.textContent = result.error || 'Unable to login right now.';
+        return;
+      }
+
+      if (result.users && result.users.role === 'user') {
+        userLoginMessage.classList.add('success');
+        userLoginMessage.textContent = 'Login successful. Redirecting...';
+
+        localStorage.setItem('userToken', result.token);
+        localStorage.setItem('userName', result.users.fullname);
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
+        return;
+      }
+
+      if (result.users && result.users.role === 'admin') {
+        userLoginMessage.classList.add('success');
+        userLoginMessage.textContent = 'Admin detected. Redirecting to admin dashboard...';
+
+        localStorage.setItem('adminToken', result.token);
+        localStorage.setItem('adminName', result.users.fullname);
+
+        setTimeout(() => {
+          window.location.href = '/admin/dashboard';
+        }, 1000);
+        return;
+      }
+
+      userLoginMessage.classList.add('error');
+      userLoginMessage.textContent = result.message || 'Invalid email or password.';
+    } catch (error) {
+      userLoginMessage.classList.add('error');
+      userLoginMessage.textContent = 'Network error while logging in.';
+    }
+  });
+</script>

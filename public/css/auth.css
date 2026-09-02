@@ -1,0 +1,113 @@
+/* ═══ AUTH PAGES (Login / Signup / Admin Login) ═══ */
+.auth-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 20px 60px;
+  background: linear-gradient(180deg, var(--pine) 0%, var(--forest) 45%, var(--snow) 45%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--white);
+  border-radius: 6px;
+  box-shadow: var(--shadow-soft);
+  padding: 44px 40px 36px;
+}
+
+.auth-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.auth-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--pine);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--warm-gray);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-form .form-group { margin-bottom: 18px; }
+
+.auth-form .form-group label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.auth-form .form-group input,
+.auth-form .form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--mist);
+  border-radius: 3px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  background: var(--snow);
+  transition: var(--transition);
+}
+
+.auth-form .form-group input:focus,
+.auth-form .form-group select:focus {
+  outline: none;
+  border-color: var(--sage);
+  box-shadow: 0 0 0 3px rgba(107,143,107,0.12);
+  background: var(--white);
+}
+
+.auth-submit {
+  width: 100%;
+  background: var(--pine);
+  color: var(--white);
+  border: none;
+  padding: 13px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 6px;
+}
+
+.auth-submit:hover { background: var(--gold); }
+
+.auth-message {
+  margin-top: 18px;
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+}
+
+.auth-message.success { color: var(--forest); }
+.auth-message.error { color: #c0392b; }
+
+.auth-footer-link {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--warm-gray);
+}
+
+.auth-footer-link a { color: var(--gold); text-decoration: none; font-weight: 500; }
+.auth-footer-link a:hover { text-decoration: underline; }

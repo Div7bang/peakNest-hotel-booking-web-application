@@ -1,0 +1,229 @@
+<%- include('partials/header') %>
+
+<style>
+.hotel-hero {
+  height: 72vh; min-height: 500px;
+  position: relative; display: flex; align-items: flex-end;
+  padding: 0; margin-top: 0; overflow: hidden;
+}
+.hotel-hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  animation: heroZoom 14s ease-in-out infinite alternate;
+}
+@keyframes heroZoom { from {transform:scale(1)} to {transform:scale(1.06)} }
+.hotel-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(5,15,5,0.9) 0%, rgba(5,15,5,0.15) 60%);
+}
+.hotel-hero-content {
+  position: relative; z-index: 2;
+  max-width: 1300px; margin: 0 auto; width: 100%;
+  padding: 0 60px 56px;
+}
+.hotel-hero-badge {
+  display: inline-block; background: var(--gold); color: white;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; margin-bottom: 14px; border-radius: 2px;
+}
+.hotel-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 6vw, 72px); font-weight: 300;
+  color: white; line-height: 1.05; margin-bottom: 14px;
+}
+.hotel-hero-meta { display: flex; gap: 20px; align-items: center; color: rgba(255,255,255,0.7); font-size: 14px; flex-wrap: wrap; }
+.hotel-hero-meta .sep { opacity: 0.4; }
+
+/* Image gallery strip */
+.detail-gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; gap: 4px; }
+.detail-gallery-img { overflow: hidden; }
+.detail-gallery-img:first-child { grid-row: span 2; }
+.detail-gallery-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+.detail-gallery-img:hover img { transform: scale(1.05); }
+
+.hotel-detail-wrap { max-width: 1300px; margin: 0 auto; padding: 70px 60px; display: grid; grid-template-columns: 1fr 340px; gap: 50px; }
+.hotel-about h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: var(--pine); margin-bottom: 14px; }
+.hotel-about p { font-size: 15px; color: var(--warm-gray); line-height: 1.9; margin-bottom: 28px; }
+.hotel-amenities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
+.amenity-full { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--mist); border-radius: 3px; font-size: 13px; color: var(--charcoal); background: var(--snow); }
+.amenity-full .icon { font-size: 20px; }
+
+.hotel-rooms-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--pine); margin-bottom: 28px; }
+
+/* sidebar */
+.sidebar-card { background: var(--white); border: 1px solid var(--mist); border-radius: 4px; overflow: hidden; position: sticky; top: 90px; box-shadow: var(--shadow-card); }
+.sidebar-hdr { background: var(--pine); padding: 24px; color: white; }
+.sidebar-hdr .from { font-size: 12px; opacity: 0.7; }
+.sidebar-hdr .price { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--gold-light); line-height: 1; }
+.sidebar-hdr .per { font-size: 13px; opacity: 0.7; }
+.sidebar-form { padding: 24px; }
+.sidebar-form .form-group { margin-bottom: 14px; }
+.sidebar-form label { display: block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 5px; }
+.sidebar-form input, .sidebar-form select { width: 100%; padding: 11px 13px; border: 1.5px solid var(--mist); border-radius: 2px; font-family: 'Jost', sans-serif; font-size: 14px; outline: none; transition: var(--transition); background: var(--snow); }
+.sidebar-form input:focus, .sidebar-form select:focus { border-color: var(--sage); background: white; }
+.btn-sidebar-book { width: 100%; background: var(--gold); color: white; border: none; padding: 15px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: var(--transition); font-weight: 500; margin-top: 6px; }
+.btn-sidebar-book:hover { background: var(--pine); }
+.sidebar-note { font-size: 12px; color: var(--warm-gray); text-align: center; margin-top: 12px; line-height: 1.5; }
+
+@media (max-width: 900px) {
+  .hotel-detail-wrap { grid-template-columns: 1fr; padding: 40px 20px; }
+  .sidebar-card { position: static; }
+  .hotel-amenities-grid { grid-template-columns: repeat(2, 1fr); }
+  .hotel-hero-content { padding: 0 20px 40px; }
+  .detail-gallery { grid-template-columns: 1fr 1fr; }
+  .detail-gallery-img:first-child { grid-row: span 1; }
+}
+@media (max-width: 600px) {
+  .detail-gallery { grid-template-columns: 1fr; }
+  .hotel-amenities-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<section class="hotel-hero">
+  <img class="hotel-hero-img" src="<%= hotel.heroImage || hotel.image %>" alt="<%= hotel.name %>"/>
+  <div class="hotel-hero-overlay"></div>
+  <div class="hotel-hero-content">
+    <div class="hotel-hero-badge">📍 <%= hotel.location %>, Himachal Pradesh</div>
+    <h1><%= hotel.name %></h1>
+    <div class="hotel-hero-meta">
+      <span>★ <%= hotel.rating %> Rating</span>
+      <span class="sep">|</span>
+      <span>From ₹<%= hotel.price.toLocaleString('en-IN') %>/night</span>
+      <span class="sep">|</span>
+      <span><%= hotel.amenities.length %>+ Amenities</span>
+      <% if(hotel.badge) { %><span class="sep">|</span><span style="color:var(--gold-light)"><%= hotel.badge %></span><% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Photo Gallery -->
+<div class="detail-gallery" style="max-height:440px;overflow:hidden">
+  <% hotel.gallery.forEach((img, i) => { %>
+  <!-- <div class="detail-gallery-img" style="<%= i>=3?'display:none':'' %>"> -->
+    <div class="detail-gallery-img <%= i >= 3 ? 'hidden' : '' %>"></div>
+    <img src="<%= img %>" alt="<%= hotel.name %> photo <%= i+1 %>" loading="lazy"/>
+  </div>
+  <% }) %>
+</div>
+
+<div class="hotel-detail-wrap">
+  <!-- LEFT: Details -->
+  <div>
+    <div class="hotel-about">
+      <h2>About <%= hotel.name %></h2>
+      <p><%= hotel.description %> Every morning begins with panoramic mountain views and every evening ends with a sky full of Himalayan stars.</p>
+      <p>Our curated team of hospitality experts ensures a stay that exceeds every expectation — from private sunrise treks to candlelit dinners on the terrace.</p>
+
+      <h2 style="font-size:30px;margin-bottom:20px;margin-top:10px">Hotel Amenities</h2>
+      <div class="hotel-amenities-grid">
+        <div class="amenity-full"><span class="icon">🏊</span> Heated Pool</div>
+        <div class="amenity-full"><span class="icon">🧖</span> Spa & Wellness</div>
+        <div class="amenity-full"><span class="icon">🍽</span> Fine Dining</div>
+        <div class="amenity-full"><span class="icon">🔥</span> Bonfire Lounge</div>
+        <div class="amenity-full"><span class="icon">🧘</span> Yoga Deck</div>
+        <div class="amenity-full"><span class="icon">🚗</span> Airport Transfer</div>
+        <div class="amenity-full"><span class="icon">📶</span> High-Speed WiFi</div>
+        <div class="amenity-full"><span class="icon">🏔</span> Guided Treks</div>
+        <div class="amenity-full"><span class="icon">🍳</span> Free Breakfast</div>
+        <% hotel.amenities.forEach(a => { %>
+        <div class="amenity-full"><span class="icon">✓</span> <%= a %></div>
+        <% }) %>
+      </div>
+    </div>
+
+    <h2 class="hotel-rooms-title">Available Rooms</h2>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+      <% rooms.slice(0,4).forEach((room, i) => { %>
+      <div class="room-card" style="opacity:1;transform:none">
+        <div class="room-img-wrap">
+          <img src="<%= room.image %>" alt="<%= room.name %>" loading="lazy"/>
+          <% if(room.discount) { %><div class="room-deal">-<%= room.discount %>% OFF</div><% } %>
+        </div>
+        <div class="room-body">
+          <div class="room-type"><%= room.category %></div>
+          <h3 class="room-name"><%= room.name %></h3>
+          <div class="room-specs">
+            <span class="room-spec">👥 <%= room.guests %></span>
+            <span class="room-spec">🛏 <%= room.beds %></span>
+          </div>
+          <div class="room-footer">
+            <div class="room-price">
+              <% if(room.originalPrice) { %><span class="crossed">₹<%= room.originalPrice.toLocaleString('en-IN') %></span><% } %>
+              <span class="final">₹<%= room.price.toLocaleString('en-IN') %></span>
+              <span class="night">/night</span>
+            </div>
+            <!-- <button class="btn-book" onclick="openBooking('<%= room.name %>', '₹<%= room.price.toLocaleString('en-IN') %>')"> -->
+              <button class="btn-book"
+  data-name="<%= room.name %>"
+  data-price="₹<%= room.price.toLocaleString('en-IN') %>">
+              Book</button>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <div>
+    <div class="sidebar-card">
+      <div class="sidebar-hdr">
+        <div class="from">Starting from</div>
+        <div class="price">₹<%= hotel.price.toLocaleString('en-IN') %></div>
+        <div class="per">per night · taxes included</div>
+      </div>
+      <div class="sidebar-form">
+        <div class="form-group">
+          <label>Check-in</label>
+          <input type="date" id="sb-checkin"/>
+        </div>
+        <div class="form-group">
+          <label>Check-out</label>
+          <input type="date" id="sb-checkout"/>
+        </div>
+        <div class="form-group">
+          <label>Guests</label>
+          <select>
+            <option>1 Guest</option>
+            <option selected>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4+ Guests</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Room Type</label>
+          <select>
+            <option>Mountain View Deluxe</option>
+            <option>Valley View Suite</option>
+            <option>Heritage Suite</option>
+            <option>Private Villa</option>
+          </select>
+        </div>
+        <button class="btn-sidebar-book" onclick="openBooking('<%= hotel.name %>')">
+          Reserve Now
+        </button>
+        <p class="sidebar-note">🔒 Free cancellation · Best price guarantee</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Set min dates on sidebar
+const today = new Date().toISOString().split('T')[0];
+const sbIn  = document.getElementById('sb-checkin');
+const sbOut = document.getElementById('sb-checkout');
+if(sbIn)  sbIn.min  = today;
+if(sbOut) sbOut.min = today;
+if(sbIn && sbOut) {
+  sbIn.addEventListener('change', () => {
+    const next = new Date(sbIn.value);
+    next.setDate(next.getDate() + 1);
+    sbOut.min = next.toISOString().split('T')[0];
+    if (!sbOut.value || sbOut.value <= sbIn.value)
+      sbOut.value = next.toISOString().split('T')[0];
+  });
+}
+</script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title || 'PeakNest — Himachal Luxury Hotels' %></title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏔</text></svg>">
+</head>
+<body>
+
+<!-- navbar -->
+<nav class="navbar" id="navbar">
+  <a href="/" class="nav-logo">Peak<span>Nest</span></a>
+
+  <ul class="nav-links">
+    <li><a href="/#locations">Destinations</a></li>
+    <li><a href="/#hotels">Hotels</a></li>
+    <li><a href="/#rooms">Rooms</a></li>
+    <li><a href="/#deals">Deals</a></li>
+    <li><a href="/#contact">Contact</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/signup">Signup</a></li>
+    <li><a href="#" class="nav-cta" onclick="openBooking(); return false;">Book Now</a></li>
+  </ul>
+
+  <!-- Hamburger for mobile -->
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile fullscreen menu -->
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="/#locations">Destinations</a></li>
+  <li><a href="/#hotels">Hotels</a></li>
+  <li><a href="/#rooms">Rooms</a></li>
+  <li><a href="/#deals">Deals</a></li>
+  <li><a href="/#contact">Contact</a></li>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/signup">Signup</a></li>
+  <li><a href="#" class="mob-cta" onclick="openBooking(); return false;">Book Now</a></li>
+</ul>

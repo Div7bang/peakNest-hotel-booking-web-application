@@ -1,0 +1,76 @@
+<%- include('partials/header', { title: 'Admin Login | PeakNest' }) %>
+<link rel="stylesheet" href="/css/auth.css"/>
+
+<main class="auth-main">
+  <div class="auth-card">
+    <p class="auth-eyebrow">Staff Access</p>
+    <h1 class="auth-title">Admin Login</h1>
+    <p class="auth-subtitle">Enter your admin credentials</p>
+
+    <form id="adminLoginForm" class="auth-form" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="admin@peaknest.in" required/>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required/>
+      </div>
+      <button type="submit" class="auth-submit">Login as Admin</button>
+    </form>
+
+    <div id="adminLoginMessage" class="auth-message" role="status" aria-live="polite"></div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script>
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const adminLoginMessage = document.getElementById('adminLoginMessage');
+
+  adminLoginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    adminLoginMessage.className = 'auth-message';
+    adminLoginMessage.textContent = 'Checking credentials...';
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        adminLoginMessage.classList.add('error');
+        adminLoginMessage.textContent = result.error || 'Unable to login right now.';
+        return;
+      }
+
+      if (result.users && result.users.role === 'admin') {
+        adminLoginMessage.classList.add('success');
+        adminLoginMessage.textContent = 'Admin login successful. Redirecting...';
+
+        localStorage.setItem('adminToken', result.token);
+        localStorage.setItem('adminName', result.users.fullname);
+
+        setTimeout(() => {
+          window.location.href = '/admin/dashboard';
+        }, 1000);
+        return;
+      }
+
+      adminLoginMessage.classList.add('error');
+      adminLoginMessage.textContent = 'Access denied. This account is not an admin.';
+    } catch (error) {
+      adminLoginMessage.classList.add('error');
+      adminLoginMessage.textContent = 'Network error while logging in.';
+    }
+  });
+</script>

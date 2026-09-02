@@ -1,0 +1,165 @@
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Peak<span>Nest</span></span>
+      <p>Your sanctuary in the Himalayas. We curate extraordinary mountain escapes across Himachal Pradesh — from misty Shimla valleys to the high peaks of Spiti.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-btn" aria-label="Instagram">ig</a>
+        <a href="#" class="social-btn" aria-label="Facebook">fb</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Shimla</a></li>
+        <li><a href="#">Manali</a></li>
+        <li><a href="#">Dharamshala</a></li>
+        <li><a href="#">Kasol</a></li>
+        <li><a href="#">Spiti Valley</a></li>
+        <li><a href="#">Dalhousie</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Room Types</a></li>
+        <li><a href="#">Packages &amp; Deals</a></li>
+        <li><a href="#">Travel Guide</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+91 1234569876">📞 +91 98765 43210</a></li>
+        <li><a href="mailto:hello@pea​knest.in">✉ hello@pea​knest.in</a></li>
+        <li><a href="#">📍 Shimla, HP 171001</a></li>
+        <li><a href="#">24/7 Guest Support</a></li>
+        <li><a href="#">Cancellation Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PeakNest. All rights reserved.</p>
+    <p>Crafted with ♥ for the mountains</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     BOOKING MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+
+    <!-- Header (always visible) -->
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <h3 id="modalRoomName">Reserve Your Room</h3>
+        <div class="room-info" id="modalRoomInfo"></div>
+      </div>
+      <button class="modal-close" onclick="closeBooking()" aria-label="Close">✕</button>
+    </div>
+
+    <!-- FORM VIEW -->
+    <div class="modal-body" id="modalForm">
+      <p class="form-section-label">Guest Details</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="guestName">Full Name *</label>
+          <input type="text" id="guestName" placeholder="Your full name" autocomplete="name"/>
+        </div>
+        <div class="form-group">
+          <label for="guestEmail">Email Address *</label>
+          <input type="email" id="guestEmail" placeholder="you@email.com" autocomplete="email"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="guestPhone">Phone Number</label>
+          <input type="tel" id="guestPhone" placeholder="+91 98765 43210" autocomplete="tel"/>
+        </div>
+        <div class="form-group">
+          <label for="guestCount">Number of Guests</label>
+          <select id="guestCount">
+            <option value="1">1 Guest</option>
+            <option value="2" selected>2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+            <option value="5">5+ Guests</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="form-section-label">Stay Details</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="checkinDate">Check-in Date *</label>
+          <input type="date" id="checkinDate"/>
+        </div>
+        <div class="form-group">
+          <label for="checkoutDate">Check-out Date *</label>
+          <input type="date" id="checkoutDate"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="roomTypeSelect">Room Type</label>
+          <select id="roomTypeSelect">
+            <option value="Mountain View Deluxe">Mountain View Deluxe</option>
+            <option value="Valley View Suite">Valley View Suite</option>
+            <option value="Forest Deluxe">Forest Deluxe</option>
+            <option value="Colonial Heritage Suite">Colonial Heritage Suite</option>
+            <option value="Himalayan Peak Villa">Himalayan Peak Villa</option>
+            <option value="Parvati Riverside Villa">Parvati Riverside Villa</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="hotelSelect">Preferred Hotel</label>
+          <select id="hotelSelect">
+            <option value="">Any available</option>
+            <option value="Wildflower Hall">Wildflower Hall, Shimla</option>
+            <option value="The Solang Retreat">The Solang Retreat, Manali</option>
+            <option value="Norbulingka Estate">Norbulingka Estate, Dharamshala</option>
+            <option value="Kinner Kailash Camp">Kinner Kailash Camp, Spiti</option>
+            <option value="Parvati Riverside Lodge">Parvati Riverside Lodge, Kasol</option>
+            <option value="Grand Dalhousie Manor">Grand Dalhousie Manor</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0">
+        <label for="specialRequests">Special Requests</label>
+        <textarea id="specialRequests" placeholder="Any dietary needs, accessibility requirements, or special occasions…"></textarea>
+      </div>
+
+      <button class="btn-confirm" id="confirmBookingBtn">Confirm Reservation →</button>
+      <p class="modal-footnote">🔒 Free cancellation · Best price guaranteed · No card required now</p>
+    </div>
+
+    <!-- SUCCESS VIEW (shown after submit, hidden initially) -->
+    <div class="modal-success-view" id="modalSuccess">
+      <div class="success-icon">✓</div>
+      <h4>Booking Confirmed!</h4>
+      <p>
+        Thank you, <strong id="successGuestName"></strong>!<br>
+        Your <strong id="successRoomName"></strong> has been reserved.<br>
+        Confirmation details have been sent to <strong id="successEmail"></strong>.
+      </p>
+      <button class="btn-done" id="doneBtn">Done</button>
+    </div>
+
+  </div><!-- .modal -->
+</div><!-- .modal-overlay -->
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
